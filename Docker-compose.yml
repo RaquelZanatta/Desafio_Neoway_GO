@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: go run main.go
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: "db-postgree"
+    environment:
+      POSTGRES_PASSWORD: neoway2023
+      POSTGRES_USER: neoway2023
+      POSTGRES_DB: clients
+    volumes:
+      - "./data/postgress:/var/lib/postgresql/data/"
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
